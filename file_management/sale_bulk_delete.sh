@@ -3,6 +3,9 @@
 # Ask for the directory to search in
 read -p "Enter the directory to search in: " SEARCH_DIR
 
+# Expand ~ to full path
+SEARCH_DIR="${SEARCH_DIR/#\~/$HOME}"
+
 # Check if directory exists
 if [[ ! -d "$SEARCH_DIR" ]]; then
   echo "Directory does not exist!"
@@ -31,8 +34,9 @@ if [[ "$CONFIRM" != "yes" ]]; then
   exit 0
 fi
 
-# Optional log file
-LOG_FILE="deleted_files.log"
+# Log file in home directory
+LOG_FILE="$HOME/deleted_files.log"
+
 echo "Deleting files..."
 for FILE in $FILES_TO_DELETE; do
   # Prompt for each file with clear instructions
